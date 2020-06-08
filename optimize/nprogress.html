@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>通过 nprogress 添加进度条效果 | 电商后台管理系统项目总结</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    <link rel="icon" href="/cms-summary/favicon.ico">
+    <meta name="description" content="vue cms summary">
+    <link rel="preload" href="/cms-summary/assets/css/0.styles.7d6c5e30.css" as="style"><link rel="preload" href="/cms-summary/assets/js/app.396fbfb4.js" as="script"><link rel="preload" href="/cms-summary/assets/js/2.f596cb4b.js" as="script"><link rel="preload" href="/cms-summary/assets/js/11.d052bd3b.js" as="script"><link rel="prefetch" href="/cms-summary/assets/js/10.4b3005ee.js"><link rel="prefetch" href="/cms-summary/assets/js/12.be73eb3f.js"><link rel="prefetch" href="/cms-summary/assets/js/13.d58e6ef0.js"><link rel="prefetch" href="/cms-summary/assets/js/3.b7b61c05.js"><link rel="prefetch" href="/cms-summary/assets/js/4.211e1f9f.js"><link rel="prefetch" href="/cms-summary/assets/js/5.e0e71051.js"><link rel="prefetch" href="/cms-summary/assets/js/6.5876c8e0.js"><link rel="prefetch" href="/cms-summary/assets/js/7.449943d5.js"><link rel="prefetch" href="/cms-summary/assets/js/8.dc3c6b94.js"><link rel="prefetch" href="/cms-summary/assets/js/9.d53f629c.js">
+    <link rel="stylesheet" href="/cms-summary/assets/css/0.styles.7d6c5e30.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/cms-summary/" class="home-link router-link-active"><!----> <span class="site-name">电商后台管理系统项目总结</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>项目优化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/cms-summary/optimize/" aria-current="page" class="sidebar-link">项目优化策略</a></li><li><a href="/cms-summary/optimize/nprogress.html" aria-current="page" class="active sidebar-link">通过 nprogress 添加进度条效果</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/cms-summary/optimize/nprogress.html#安装" class="sidebar-link">安装</a></li><li class="sidebar-sub-header"><a href="/cms-summary/optimize/nprogress.html#使用" class="sidebar-link">使用</a></li></ul></li><li><a href="/cms-summary/optimize/remove-console.html" class="sidebar-link">build 移除所有console</a></li><li><a href="/cms-summary/optimize/webpack-config.html" class="sidebar-link">webpack相关配置</a></li><li><a href="/cms-summary/optimize/homepage-custom.html" class="sidebar-link">首页内容自定制</a></li><li><a href="/cms-summary/optimize/lazy-router.html" class="sidebar-link">路由懒加载</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>项目上线</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/cms-summary/online/" class="sidebar-link">Introduction</a></li><li><a href="/cms-summary/online/node-server.html" class="sidebar-link">node启动服务器</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="通过-nprogress-添加进度条效果"><a href="#通过-nprogress-添加进度条效果" class="header-anchor">#</a> 通过 nprogress 添加进度条效果</h1> <h2 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h2> <div class="language- extra-class"><pre class="language-text"><code>$ npm install --save nprogress 或者
+$ yarn add nprogress
+</code></pre></div><h2 id="使用"><a href="#使用" class="header-anchor">#</a> 使用</h2> <h3 id="axios请求中"><a href="#axios请求中" class="header-anchor">#</a> axios请求中</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//导入进度条插件</span>
+<span class="token keyword">import</span> NProgress <span class="token keyword">from</span> <span class="token string">'nprogress'</span>
+<span class="token comment">//导入进度条样式</span>
+<span class="token keyword">import</span> <span class="token string">'nprogress/nprogress.css'</span>
+
+<span class="token comment">//请求在到达服务器之前，先会调用use中的这个回调函数来添加请求头信息</span>
+axios<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>request<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">config</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">//当进入request拦截器，表示发送了请求，我们就开启进度条</span>
+  NProgress<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">//为请求头对象，添加token验证的Authorization字段</span>
+  config<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>Authorization <span class="token operator">=</span> window<span class="token punctuation">.</span>sessionStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">&quot;token&quot;</span><span class="token punctuation">)</span>
+  <span class="token comment">//必须返回config</span>
+  <span class="token keyword">return</span> config
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>在 response 拦截器中，隐藏进度条:</p> <div class="language-js extra-class"><pre class="language-js"><code>axios<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">config</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+  <span class="token comment">//当进入response拦截器，表示请求已经结束，我们就结束进度条</span>
+  NProgress<span class="token punctuation">.</span><span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> config
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="路由中"><a href="#路由中" class="header-anchor">#</a> 路由中</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//导入</span>
+<span class="token keyword">import</span> NProgress <span class="token keyword">from</span> <span class="token string">'nprogress'</span>
+<span class="token keyword">import</span> <span class="token string">'nprogress/nprogress.css'</span>
+
+router<span class="token punctuation">.</span><span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span> <span class="token keyword">from</span><span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  NProgress<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+router<span class="token punctuation">.</span><span class="token function">afterEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  NProgress<span class="token punctuation">.</span><span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="简单配置"><a href="#简单配置" class="header-anchor">#</a> 简单配置</h3> <ul><li><p>NProgress.set(n)</p> <p>设置进度条的百分比，0~1之间</p></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>NProgress<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 类似于start()</span>
+NProgress<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">0.4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+NProgress<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//类似于done()</span>
+</code></pre></div><ul><li><p>NProgress.inc()</p> <p>使进度条增加一个随机量（非100%），也可以传递一个增量值，会在当前基础上增加该值，最大0.994</p></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>NProgress<span class="token punctuation">.</span><span class="token function">inc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+NProgress<span class="token punctuation">.</span><span class="token function">inc</span><span class="token punctuation">(</span><span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ul><li><p>NProgress.configure()</p> <p>传递一个对象类型配置：</p></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>NProgress<span class="token punctuation">.</span><span class="token function">configure</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  	mininum<span class="token operator">:</span><span class="token number">0.1</span><span class="token punctuation">,</span>	<span class="token comment">// 开始时的最低百分比（默认0.08）</span>
+	template<span class="token operator">:</span> <span class="token string">&quot;&lt;div class='....'&gt;...&lt;/div&gt;&quot;</span><span class="token punctuation">,</span>	<span class="token comment">// 进度条自定义HTML</span>
+	easing<span class="token operator">:</span> <span class="token string">'ease'</span><span class="token punctuation">,</span> speed<span class="token operator">:</span> <span class="token number">500</span><span class="token punctuation">,</span>		<span class="token comment">// 动画设置，接收CSS3 缓冲动画字符串，以及动画速度</span>
+	trickle<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>			<span class="token comment">// 设置自动递增的默认行为（默认true）</span>
+	trickleSpeed<span class="token operator">:</span> <span class="token number">200</span><span class="token punctuation">,</span>		<span class="token comment">// 进度条默认速度</span>
+	showSpinner<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>		<span class="token comment">// 是否显示右上角螺旋加载提示</span>
+	parent<span class="token operator">:</span> <span class="token string">'#container'</span>	<span class="token comment">// 父容器（默认body）</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><ul><li><p>改变进度条颜色</p> <p>在 APP.vue 中 style 中增加：</p></li></ul> <div class="language-css extra-class"><pre class="language-css"><code><span class="token selector">#nprogress .bar</span> <span class="token punctuation">{</span>
+	<span class="token property">background</span><span class="token punctuation">:</span> red <span class="token important">!important</span><span class="token punctuation">;</span> //自定义颜色
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/cms-summary/optimize/" class="prev router-link-active">
+        项目优化策略
+      </a></span> <span class="next"><a href="/cms-summary/optimize/remove-console.html">
+        build 移除所有console
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/cms-summary/assets/js/app.396fbfb4.js" defer></script><script src="/cms-summary/assets/js/2.f596cb4b.js" defer></script><script src="/cms-summary/assets/js/11.d052bd3b.js" defer></script>
+  </body>
+</html>
